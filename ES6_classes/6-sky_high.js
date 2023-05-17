@@ -13,4 +13,3 @@ export default class SkyHighBuilding extends Building {
     return (`evacuate slowly the ${this._floors} floors`);
   }
 }
-
