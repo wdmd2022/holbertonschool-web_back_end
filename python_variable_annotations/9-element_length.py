@@ -6,10 +6,10 @@ def element_length(lst):
 """
 
 
-from typing import Sequence, List, Tuple
+from typing import Sequence, Iterable, List, Tuple
 
 
-def element_length(lst: Sequence) -> List[Tuple[Sequence, int]]:
+def element_length(lst: Iterable[Sequence]) -> List[Tuple[Sequence, int]]:
     """this function takes a list-like object and returns a new list
     of tuples, with each tuple containing an iterable, sequence-like
     object and the length of that object.
