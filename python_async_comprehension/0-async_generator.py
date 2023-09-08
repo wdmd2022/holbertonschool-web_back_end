@@ -7,18 +7,19 @@ random number between 0 and 10 with the help of the random module.
 
 import asyncio
 from random import uniform as silly_number
-from typing import Iterable
+from typing import Generator
 
 
-async def async_generator() -> Iterable[float]:
+async def async_generator() -> Generator[float, None, None]:
     """this coroutine loops 10 times, each time waiting a second before
     yielding a random float between 0 and 10
 
     Returns:
-        Iterable[float]: the asynchronous generator
+        Generator[float, None, None]: the asynchronous generator
 
     Yields:
-        Iterator[Iterable[float]]: generator functionality for getting floats
+        Generator[float, None, None]: generator functionality
+        for getting floats
     """
     for _ in range(10):
         await asyncio.sleep(1)
