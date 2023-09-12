@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""this module contains a class LRUCache which extends BaseCaching and
-implements simple put and get functions using a LRU algorithm"""
+"""this module contains a class MRUCache which extends BaseCaching and
+implements simple put and get functions using an MRU algorithm"""
 
 BaseCaching = __import__('base_caching').BaseCaching
 
 
-class LRUCache(BaseCaching):
+class MRUCache(BaseCaching):
     """this class extends BaseCaching with basic put and get functions
-    that operate on a Least-Recently-Used algorithm to manage the cache size
+    that operate on a Most-Recently-Used algorithm to manage the cache size
 
     Args:
         BaseCaching (BaseCaching): we inherit from this class
@@ -15,7 +15,7 @@ class LRUCache(BaseCaching):
 
     def __init__(self):
         super().__init__()
-        self.listy = []
+        self.most_recent_key = None
 
     def put(self, key, item):
         """this function assigns to the dictionary self.cache_data
@@ -31,14 +31,10 @@ class LRUCache(BaseCaching):
             pass
         else:
             self.cache_data[key] = item  # set the value in the cache
-            if key in self.listy:  # is it already in the ordered list?
-                self.listy.remove(key)  # if it is, remove it
-            self.listy.append(key)  # and either way, put it at the end
             if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-                key_to_del = self.listy[-(BaseCaching.MAX_ITEMS + 1)]
-                del self.cache_data[key_to_del]  # remove the LRU one
-                self.listy.remove(key_to_del)
-                print(f"DISCARD: {key_to_del}")
+                del self.cache_data[self.most_recent_key]
+                print(f"DISCARD: {self.most_recent_key}")
+            self.most_recent_key = key  # update value of our last-used key
 
     def get(self, key):
         """this method returns the value in self.cache_data associated
@@ -53,7 +49,5 @@ class LRUCache(BaseCaching):
         """
         if (key is None or not(key in self.cache_data)):
             return None
-        if key in self.listy:  # is it already in the ordered list?
-            self.listy.remove(key)  # if it is, remove it
-            self.listy.append(key)  # and either way, put it at the end
+        self.most_recent_key = key  # update value of our last-used key
         return self.cache_data[key]
