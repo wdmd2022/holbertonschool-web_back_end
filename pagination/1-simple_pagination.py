@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+"""this module contains a function index_range and a class Server which
+serves to paginate a CSV for us into manageable chunks (after all, who
+wants to read 10,000 baby names at once?)"""
+
 import csv
 import math
 from typing import List, Tuple
