@@ -73,6 +73,22 @@ class Server:
             self, page: int = 1,
             page_size: int = 10
             ) -> Dict[str, Union[int, List[List], None]]:
+        """this function is like get_page but instead of just getting
+        a page, it returns an entire dictionary of cool info along with it
+
+        Args:
+            page (int, optional): page # to grab. Defaults to 1.
+            page_size (int, optional): how many rows of data. Defaults to 10.
+
+        Returns:
+            Dict[str, Union[int, List[List], None]]: a dictionary detailing:
+            page_size: the length of the returned dataset page
+            page: the current page number
+            data: the dataset page
+            next_page: number of the next page, None if no next page
+            prev_page: number of the previous page, None if no previous page
+            total_pages: the total number of pages in the dataset as integer
+        """
         gotten_page = self.get_page(page, page_size)
         return_page_size = len(gotten_page)
         return_page_number = page
