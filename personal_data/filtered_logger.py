@@ -36,6 +36,9 @@ def filter_datum(fields: List[str],
                  redaction: str,
                  message: str,
                  separator: str) -> str:
+    """
+    edits lines for our log files, aww yeah
+    """
     new_str = message
     for item in fields:
         new_str = re.sub('{}=.*?(?={})'.format(item, separator),
