@@ -33,7 +33,7 @@ class BasicAuth(Auth):
         try:
             llcoolvalue = base64.b64decode(base64_authorization_header)
             return llcoolvalue.decode('utf-8')
-        except base64.binascii.Error:
+        except Exception:
             return None
 
     def extract_user_credentials(
@@ -66,3 +66,14 @@ class BasicAuth(Auth):
             if record.is_valid_password(user_pwd):
                 return record
         return None
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """ overloads Auth and retrieves the User instance for a request"""
+        if request is None:
+            return None
+        auth_header = self.authorization_header(request)
+        auth_header_base_64 = self.extract_base64_authorization_header(
+            auth_header)
+        decoded = self.decode_base64_authorization_header(auth_header_base_64)
+        emaily, passy = self.extract_user_credentials(decoded)
+        return self.user_object_from_credentials(emaily, passy)
