@@ -3,6 +3,7 @@
 
 
 from api.v1.auth.auth import Auth
+from typing import Tuple
 import base64
 
 
@@ -33,3 +34,17 @@ class BasicAuth(Auth):
             return llcoolvalue.decode('utf-8')
         except base64.binascii.Error:
             return None
+
+    def extract_user_credentials(
+            self, decoded_base64_authorization_header: str) -> (str, str):
+        """ if you like tuples you will love this method! It returns the
+        user email and password from the Base64 decoded value"""
+        if decoded_base64_authorization_header is None:
+            return (None, None)
+        if not isinstance(decoded_base64_authorization_header, str):
+            return (None, None)
+        if ':' not in decoded_base64_authorization_header:
+            return (None, None)
+        s = decoded_base64_authorization_header  # such a long name!
+        colon_location = s.find(':')
+        return (s[:colon_location], s[colon_location+1:])
