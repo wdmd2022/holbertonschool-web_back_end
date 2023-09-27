@@ -7,7 +7,6 @@ from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
 import os
-from werkzeug.routing import BuildError
 
 
 app = Flask(__name__)
@@ -77,9 +76,7 @@ def before_request():
     """ filters each request to see if auth is needed"""
     paths_to_check = ['/api/v1/status/', 'api/v1/unauthorized/',
                       'api/v1/forbidden/', 'api/v1/auth_session/login/']
-    try:
-        app.url_map.bind('localhost').match(request.path)
-    except BuildError:
+    if request.endpoint is None:
         abort(404)
     if auth is None:
         return
