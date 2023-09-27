@@ -7,6 +7,7 @@ from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
 import os
+from werkzeug.routing import BuildError
 
 
 app = Flask(__name__)
@@ -47,22 +48,50 @@ def forbidden(error) -> str:
     return jsonify({"error": "Forbidden"}), 403
 
 
-@app.before_request
+"""@app.before_request
 def before_request():
-    """ filters each request to see if auth is needed"""
+    """  # filters each request to see if auth is needed
+"""
     paths_to_check = ['/api/v1/status/', 'api/v1/unauthorized/',
                       'api/v1/forbidden/', 'api/v1/auth_session/login/']
+    try:
+        app.url_map.bind('localhost').match(request.path)
+    except BuildError:
+        abort(404)
     if auth is None:
         return
     if not auth.require_auth(request.path, paths_to_check):
         return
+    if auth.current_user(request) is None:
+        abort(403)
     if auth.authorization_header(request) is None and auth.session_cookie(
                                                 request) is None:
         abort(401)
     if auth.authorization_header(request) is None:
         abort(401)
+    request.current_user = auth.current_user(request)"""
+
+
+@app.before_request
+def before_request():
+    """ filters each request to see if auth is needed"""
+    paths_to_check = ['/api/v1/status/', 'api/v1/unauthorized/',
+                      'api/v1/forbidden/', 'api/v1/auth_session/login/']
+    try:
+        app.url_map.bind('localhost').match(request.path)
+    except BuildError:
+        abort(404)
+    if auth is None:
+        return
+    if not auth.require_auth(request.path, paths_to_check):
+        return
+    if auth.authorization_header(request) is None and auth.session_cookie(
+                                                            request) is None:
+        abort(401)
     if auth.current_user(request) is None:
-        abort(403)
+        if (auth.authorization_header(request) is not None
+           or auth.session_cookie(request) is not None):
+            abort(403)
     request.current_user = auth.current_user(request)
 
 
