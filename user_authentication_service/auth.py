@@ -68,6 +68,17 @@ class Auth:
         their session_id to None. Uses only public methods of self._db"""
         self._db.update_user(user_id, session_id=None)
 
+    def get_reset_password_token(self, email: str) -> str:
+        """method to generate a password reset token for a user and to
+        update the user's reset_token database field. Returns the token"""
+        try:
+            user = self._db.find_user_by(email=email)
+            reset_token = _generate_uuid()
+            self._db.update_user(user.id, reset_token=reset_token)
+            return reset_token
+        except NoResultFound:
+            raise ValueError
+
 
 def _generate_uuid() -> str:
     """ this private little function generates a new uuid for us, using
