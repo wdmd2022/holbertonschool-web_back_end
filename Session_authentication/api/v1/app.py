@@ -74,8 +74,8 @@ def before_request():
 @app.before_request
 def before_request():
     """ filters each request to see if auth is needed"""
-    paths_to_check = ['/api/v1/status/', 'api/v1/unauthorized/',
-                      'api/v1/forbidden/', 'api/v1/auth_session/login/']
+    paths_to_check = ['/api/v1/status/', '/api/v1/unauthorized/',
+                      '/api/v1/forbidden/', '/api/v1/auth_session/login/']
     if request.endpoint is None:
         abort(404)
     if auth is None:
