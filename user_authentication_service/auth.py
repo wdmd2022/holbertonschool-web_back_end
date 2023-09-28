@@ -41,7 +41,7 @@ class Auth:
 def _generate_uuid() -> str:
     """ this private little function generates a new uuid for us, using
     uuid4's random uuid generator"""
-    return str(uuid4)
+    return str(uuid4())
 
 
 def _hash_password(password: str) -> bytes:
