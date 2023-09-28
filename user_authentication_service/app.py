@@ -2,7 +2,7 @@
 """ this file initializes a flask app for us """
 
 
-from flask import Flask, jsonify, request, abort, make_response
+from flask import Flask, jsonify, request, abort, make_response, redirect
 from auth import Auth
 
 
@@ -40,6 +40,18 @@ def login():
     resp = make_response(jsonify({"email": email, "message": "logged in"}))
     resp.set_cookie("session_id", session_id)
     return resp
+
+
+@app.route("/sessions", methods=['DELETE'], strict_slashes=False)
+def logout():
+    """this is where we log the user out by setting their sessiont to None"""
+    session_id = request.cookies.get("session_id")  # it's in the cookie
+    user = AUTH.get_user_from_session_id(session_id)  # now we get the user
+    if user:
+        AUTH.destroy_session(user.id)
+        return redirect("/")
+    else:
+        abort(403)
 
 
 if __name__ == "__main__":
