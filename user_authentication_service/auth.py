@@ -37,6 +37,21 @@ class Auth:
         except NoResultFound:
             return False
 
+    def create_session(self, email: str) -> str:
+        """ takes an email as an argument and returns the session ID
+        as a string. It does this by finding the user that corresponds
+        to the email, generates a new UUID and stores it in the database
+        as the user's session_id, then returns that new session ID as
+        a string. And it does it while only using public methods of self._db
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+            session_id = _generate_uuid()
+            self._db.update_user(user.id, session_id=session_id)
+            return session_id
+        except NoResultFound:
+            return None
+
 
 def _generate_uuid() -> str:
     """ this private little function generates a new uuid for us, using
