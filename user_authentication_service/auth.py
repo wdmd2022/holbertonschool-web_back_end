@@ -79,6 +79,19 @@ class Auth:
         except NoResultFound:
             raise ValueError
 
+    def update_password(self, reset_token: str, password: str) -> None:
+        """uses the reset_token to find the corresponding user, and if
+        they exist, hashes their new password and updates the user's
+        hashed password field in the database and removes the reset_token
+        by setting its value to None"""
+        try:
+            user = self._db.find_user_by(reset_token=reset_token)
+            hashed_pass = _hash_password(password)
+            self._db.update_user(
+                user.id, hashed_password=hashed_pass, reset_token=None)
+        except NoResultFound:
+            raise ValueError
+
 
 def _generate_uuid() -> str:
     """ this private little function generates a new uuid for us, using
