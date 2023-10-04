@@ -1,4 +1,4 @@
-# i18n
+# i18n and localization
 
 ## Resources
 ### Read or watch:
