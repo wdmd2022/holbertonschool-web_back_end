@@ -43,10 +43,10 @@ def welcome():
 
 def get_user():
     """this checks for the user in the db (or mock db like here)"""
-    url_user = request.args.get('login_as')
-    if url_user and url_user in users:
-        return users['url_user']
-    return None
+    try:
+        return users.get(int(request.args.get('login_as')))
+    except Exception:
+        return None
 
 
 @app.before_request
