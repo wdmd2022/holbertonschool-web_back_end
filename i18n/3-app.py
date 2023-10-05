@@ -3,7 +3,7 @@
 
 
 from flask import Flask, render_template, request
-from flask_babel import Babel, _
+from flask_babel import Babel, _  # pylint: disable=missing-function-docstring
 
 
 class Config():
