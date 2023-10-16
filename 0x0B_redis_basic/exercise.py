@@ -9,6 +9,7 @@ from functools import wraps
 
 
 def count_calls(method: Callable) -> Callable:
+    """counts how many times we call the wrapped method"""
     @wraps(method)
     def wrapper(self, *args, **kwds):
         self._redis.incr(method.__qualname__)
@@ -18,6 +19,7 @@ def count_calls(method: Callable) -> Callable:
 
 
 def call_history(method: Callable) -> Callable:
+    """records history of inputs and outputs for a method"""
     @wraps(method)
     def wrapper(self, *args):
         self._redis.rpush(f"{method.__qualname__}:inputs", str(args))
