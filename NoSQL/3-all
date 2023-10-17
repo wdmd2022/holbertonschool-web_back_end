@@ -1,2 +1,2 @@
-// this mongosh script displays the # of documents in the collection school
-db.school.count()
+// this mongosh script all documents in the collection school
+db.school.find( {} )
