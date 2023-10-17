@@ -4,7 +4,7 @@
 -- lifespan is computed using attributes `formed` and `split`
 -- script can be executed on any database
 SELECT band_name,
-(COALESCE(split, 2023) - formed) as lifespan
+(COALESCE(split, 2020) - formed) as lifespan
 FROM metal_bands
 WHERE style LIKE '%Glam rock%'
 ORDER BY lifespan DESC
