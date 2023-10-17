@@ -1,2 +1,4 @@
 // this script lists all mongodb databases
+use Implicit
+db.dropDatabase()
 show dbs
