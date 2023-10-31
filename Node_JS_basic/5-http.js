@@ -7,8 +7,6 @@ const hostname = '127.0.0.1';
 const port = 1245;
 const fs = require('fs').promises;
 
-let returnString = '';
-
 async function countStudents(csvPath) {
   let content;
   try {
@@ -23,6 +21,7 @@ async function countStudents(csvPath) {
   let studentCount = 0;
   const studentCountByField = {};
   const studentNamesByField = {};
+  let returnString = "";
   arrayOfLines.forEach((line) => {
     const [firstName, , , field] = line.split(',');
     if (!studentCountByField[field]) {
@@ -48,9 +47,14 @@ const server = http.createServer(async (req, res) => {
     res.statusCode = 200;
     res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
-    res.statusCode = 200;
-    const coolStudents = await countStudents(coolDataBase);
-    res.end(`This is the list of our students\n${coolStudents}`);
+    try {
+      res.statusCode = 200;
+      const coolStudents = await countStudents(coolDataBase);
+      res.end(`This is the list of our students\n${coolStudents}`);
+    } catch (error) {
+      res.statusCode = 200;
+      res.end(`This is the list of our students\n${error.message}`);
+    }
   }
 });
 
