@@ -21,7 +21,7 @@ async function countStudents(csvPath) {
   let studentCount = 0;
   const studentCountByField = {};
   const studentNamesByField = {};
-  let returnString = "";
+  let returnString = '';
   arrayOfLines.forEach((line) => {
     const [firstName, , , field] = line.split(',');
     if (!studentCountByField[field]) {
