@@ -50,8 +50,10 @@ app.get('/students', async (req, res) => {
     const studentData = await countStudents(database);
     res.status(200).send(`This is the list of our students\n${studentData}`);
   } catch (error) {
-    res.status(200).send(`This is the list of our students\n${error.message}`);
+    res.status(500).send(`This is the list of our students\n${error.message}`);
   }
 });
 
 app.listen(port);
+
+module.exports = app;
