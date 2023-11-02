@@ -1,4 +1,4 @@
-// holds our function createPushNoticationsJobs
+// holds our function createPushNotificationsJobs
 
 
 function createPushNotificationsJobs(jobs, queue) {
