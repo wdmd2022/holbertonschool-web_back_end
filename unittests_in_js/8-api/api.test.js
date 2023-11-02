@@ -16,7 +16,5 @@ describe('test suite for index page', function() {
             done();
         });
     });
-
-    // You can add other tests here for different routes or conditions
 });
 
