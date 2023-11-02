@@ -1,7 +1,7 @@
 // module with calculateNumber function
 
 const Utils = {
-    calculateNumber: function(type, a, b) {
+    calculateNumber(type, a, b) {
         const roundA = Math.round(a);
         const roundB = Math.round(b);
 
@@ -18,6 +18,8 @@ const Utils = {
                 }
                 const roundlyDivided = roundA / roundB;
                 return roundlyDivided;
+            default:
+                throw TypeError;
         }
     }
 }
