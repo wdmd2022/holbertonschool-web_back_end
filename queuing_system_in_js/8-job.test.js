@@ -11,8 +11,7 @@ describe('createPushNotificationsJobs test suite', () => {
     after(() => queue.testMode.exit());
 
     it('display a error message if jobs is not an array', () => {
-        expect(() => createPushNotificationsJobs('whatever', queue).to.throw('Jobs is not an array')
+        expect(() => createPushNotificationsJobs('whatever', queue).to.throw('Jobs is not an array'));
     });
-    // it('create two new jobs to the queue', () => {
-       // expect()
+
     });
