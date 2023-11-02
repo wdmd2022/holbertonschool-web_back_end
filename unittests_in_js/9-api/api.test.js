@@ -2,9 +2,6 @@
 const request = require('request');
 const expect = require('chai').expect;
 
-const request = require('request');
-const expect = require('chai').expect;
-
 describe('Cart page', function() {
     it('should return 200 and correct message for numeric id', function(done) {
         request.get('http://localhost:7865/cart/12', function(error, response, body) {
